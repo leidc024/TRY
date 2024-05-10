@@ -1,17 +1,28 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Components</title>
+    <title>index f</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <style>
-        .feature-icon {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 0.75rem;
+        #instructionMenu {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+        }
+
+        #flat-canvas {
+            display: none;
         }
     </style>
 </head>
@@ -20,7 +31,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">FSM</a>
-            
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -102,15 +113,97 @@
                         </ul>
                 </ul>
 
-
-
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Enter Postal Code" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <!-- <input id="regexInput" class="form-control me-2" type="text" placeholder="Regular Expression" aria-label="Search"> -->
+                    <input id="regexInput" class="js-userExpr form-control me-2" type="text" placeholder="Regular Expression">
+
+                    <button class="btn btn-outline-dark" onclick="
+                        try{
+                            addNewRegex();
+                            alert('Regex Uploaded')
+                        }
+                        catch{
+                            alert('ERROR BOI');
+                        }
+                    ">
+                        Upload
+                    </button>
                 </form>
             </div>
         </div>
     </nav>
+
+    <div class="centre">
+        <canvas id="flat-canvas" width="1000" height="500" style="border:1px solid #000000;">
+        </canvas>
+    </div>
+
+    <div class="px-4 pt-5 my-5 text-center border-bottom">
+        <h1 class="display-4 fw-bold text-body-emphasis">
+            Interactive Student-Teacher FSM Game
+        </h1>
+        <div class="col-lg-6 mx-auto mt-4">
+            <!-- Added margin top -->
+            <p class="lead mb-4">
+                An innovative platform designed to make learning about Finite State Machines (FSMs) both enjoyable and educational.
+                Dive into the world of FSMs and discover their practical applications with ease.
+            </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <a href="./student.html" class="btn btn-dark btn-lg px-4 me-sm-3" onclick="">Start Game</a>
+                <button class="btn btn-light btn-lg px-4 me-sm-3" type="button" onclick="toggleInstructions()">Instructions</button>
+                <!-- Added onclick event to call JavaScript function -->
+            </div>
+            <div id="instructionMenu">
+                <!-- Instruction menu content goes here -->
+                <div>
+
+                    <ul>
+                        <li><b>Create State:</b> Double-click empty space</li>
+
+                        <li><b>Create Transition From Highlighted State:</b> Shift-click state to point at</li>
+
+                        <li><b>Highlight State/Transition:</b> Single-click state/transition</li>
+
+                        <li><b>Delete State/Transition:</b> Delete key</li>
+
+                        <li><b>Toggle Start State:</b> Ctrl-click state</li>
+
+                        <li><b>Toggle Accept State:</b> Double-click state</li>
+
+                        <li><b>Label Highlighted State/Transition:</b> Type (use '\e' for ε)</li>
+                    </ul>
+                </div>
+                <button class="btn btn-danger" onclick="closeInstructions()">Exit</button>
+            </div>
+        </div>
+        <div class="overflow-hidden" style="max-height: 30vh;">
+            <div class="container px-5">
+                <img src="./fsm.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700"
+                     height="500" loading="lazy">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+
+                <li class="nav-item"><a href="./about.html" class="nav-link px-2 text-body-secondary">About</a></li>
+            </ul>
+            <p class="text-center text-body-secondary">© CMSC 141 Project</p>
+        </footer>
+        <div class="b-example-divider"></div>
+    </div>
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="script.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
-    </html>
+</html>
