@@ -1,0 +1,37 @@
+h1,h2,div.centre {
+    text-align: center;
+}
+
+.no-select {
+    user-select: none;
+}
+
+h1 {
+    'Press Start 2P', cursive;
+    font-size: 3rem;
+    margin: 5%;
+    color: #FEF2BF;
+}
+
+canvas {
+    display: block;
+    width: 800px; /* Set the width */
+    height: 400px;
+    background: white;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    margin: 10px auto;
+    user-select: none;
+}
+
+body {
+    text-align: center;
+    background: #011F3F;
+    margin: 0 30px 100px 30px;
+    font: 14px/18px 'Lucida Grande', 'Segoe UI', sans-serif;
+}
+
+.no-select {
+    color: #FEF2BF;
+}
+
