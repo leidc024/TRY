@@ -1,0 +1,118 @@
+h1 {
+    font-family:'Press Start 2P', cursive;
+    font-size: 3rem;
+    margin: 5%;
+    color: #FEF2BF;
+}
+
+canvas {
+    display: block;
+    width: 800px; /* Set the width */
+    height: 400px;
+    background: white;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    margin: 10px auto;
+    user-select: none;
+}
+
+.no-select {
+    color: #FEF2BF;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120vh; /* Full viewport height */
+    overflow-y: auto; /* Add vertical scroll if content exceeds viewport */
+}
+
+.content {
+    text-align: center;
+    width: 80%; /* Adjust width as needed */
+    position: relative; /* Positioning for absolute elements */
+}
+
+.btn-group {
+    margin-top: 20px; /* Space above Generate New Regex button */
+    margin-bottom: 20px; /* Space below Check Equivalence button */
+}
+
+.btn-group-checkbox {
+    margin-top: 10px; /* Space between Check Equivalence button and Force DFA Constraint */
+}
+
+.styled-redirects {
+    margin-top: 20px; /* Space above styled redirects */
+}
+
+.score-checker {
+    position: fixed;
+    top: 10px; /* Adjust top position as needed */
+    left: 10px; /* Adjust left position as needed */
+    background-color: #343a40; /* Background color */
+    color: white; /* Text color */
+    padding: 20px; /* Padding around content */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    z-index: 9999;
+}
+
+.score-checker span {
+    color: #007bff; /* Blue color for score text */
+    margin-right: 10px; /* Spacing between score text and value */
+}
+
+#correct-score {
+    color: #5cb85c; /* Subdued green for correct score */
+}
+
+#wrong-score {
+    color: #d9534f; /* Subdued red for wrong score */
+}
+
+/* Additional styles for the instruction menu */
+#instructionMenu {
+    display:none;
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: #fff; /* Change this to the desired background color */
+    color: #002147; /* Change this to the desired text color */
+    padding: 10px;
+    border: 10px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+.score-checker {
+    position: fixed;
+    top: 10px; /* Adjust top position as needed */
+    left: 10px; /* Adjust left position as needed */
+    background-color: #343a40; /* Background color */
+    color: white; /* Text color */
+    padding: 20px; /* Padding around content */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    z-index: 9999;
+}
+
+.score-checker span {
+    color: #007bff; /* Blue color for score text */
+    margin-right: 10px; /* Spacing between score text and value */
+}
+
+#correct-score {
+    color: #5cb85c; /* Subdued green for correct score */
+}
+
+#wrong-score {
+    color: #d9534f; /* Subdued red for wrong score */
+}
