@@ -90,8 +90,6 @@ class Regex {
     }
 
     generate2(userExpr){
-        //Teacher should represent epsilon as e but it will be converted to actual epsilon symbol here
-        userExpr = this.eToEpsilon(userExpr);
         this.postfix = this.regexToPostfix(userExpr);
         this.alphabetInRegex = this.getRegexAlphabet();
         this.regex =  userExpr;
@@ -107,19 +105,6 @@ class Regex {
             }
         }
         return usedAlphabet;
-    }
-
-    eToEpsilon(str){
-        let newStr = "";
-        for(let i = 0; i<str.length; i++){
-            if(str[i] === "e"){
-                newStr+=EPSILON;
-            }
-            else{
-                newStr+=str[i];
-            }
-        }
-        return newStr;
     }
 
     removeSpace(str){
@@ -314,14 +299,30 @@ class Regex {
     }
 }
 
+function cleanString(str) {
+  if (str.includes('+')) {
+    throw new Error("String contains a '+' character");
+  }
+  // Remove 2 or more consecutive spaces, turn them to 1 space
+  let stringWithoutSpaces = str.replace(/ {2,}/g, ' ');
+  
+  // Replace all 'e' with epsilon symbol and 'U' with '+'
+  let transformedString = stringWithoutSpaces.replace(/e/g, EPSILON).replace(/U/g, '+');
+  console.log(transformedString);
+  return transformedString;
+}
+
+
+
 function addNewRegex(userExpr="") {
-    userExpr = document.querySelector('.js-userExpr').value;
-    if(!userExpr) throw new Error('No regex');
-    regularExpression.generate2(userExpr);
-    document.querySelector('.js-userExpr').value = '';
-    console.log(userExpr);
-    regexArr.push(userExpr);
-    localStorage.setItem('regexArr', JSON.stringify(regexArr));
+  userExpr = document.querySelector('.js-userExpr').value;
+  userExpr = cleanString(userExpr);
+  if(!userExpr) throw new Error('No regex');
+  regularExpression.generate2(userExpr);
+  document.querySelector('.js-userExpr').value = '';
+  console.log(userExpr);
+  regexArr.push(userExpr.replace(/\+/g, 'U'));
+  localStorage.setItem('regexArr', JSON.stringify(regexArr));
 }
 
 const regularExpression = new Regex();
@@ -341,5 +342,4 @@ function closeInstructions() {
     // Hide the instruction menu by setting its display style to "none"
     instructionMenu.style.display = "none";
 }
-
 
