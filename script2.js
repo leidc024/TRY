@@ -147,12 +147,26 @@ class Regex {
   }
 
   generate2(userExpr){
+    //Teacher should represent epsilon as e but it will be converted to actual epsilon symbol here
+    userExpr = this.eToEpsilon(userExpr);
     this.postfix = this.regexToPostfix(userExpr);
     this.regex =  userExpr;
     console.log("postfix: " + this.postfix);
     this.nfa = this.#regexToNfa(this.postfix);
   }
 
+  eToEpsilon(str){
+    let newStr = "";
+    for(let i = 0; i<str.length; i++){
+      if(str[i] === "e"){
+        newStr+=EPSILON;
+      }
+      else{
+        newStr+=str[i];
+      }
+    }
+    return newStr;
+  }
 
   removeSpace(str){
     let newStr = "";
@@ -1081,33 +1095,6 @@ function getSymbols(label) {
   return s.values();
 }
 
-
-function isValidOr(input) {
-  let valid = true;
-  if (input != ""){
-    if (input.startsWith(",") || input.endsWith(",")) {
-        valid = false;
-    }
-
-    if (input.includes(",,")) {
-        valid = false;
-    }
-
-    const segments = input.split(",");
-    for (let segment of segments) {
-        if (segment.length !== 1) {
-            valid = false;
-        }
-    }
-  }
-  if(valid){
-    return input.replace(/[ ]/g, '');
-  }
-  else{
-    throw err;
-  }
-}
-
 /**
  * Create state transition table and accept states from
  *  user defined NFA
@@ -1149,7 +1136,6 @@ function transTable() {
   }
   // For each transition in user NFA
   for (var e of edges) {
-    e.label = isValidOr(e.label);
     // Get valid characters from label
     var symbols = getSymbols(e.label);
     // Add each transition to state transition table
@@ -1373,34 +1359,27 @@ function comp() {
   }
   if (startSid != -1) {
     var proceed = true;
-    try{
-      var userNFA = transTable();
-      if (document.getElementById('dfa-toggle').checked) {
-        proceed = dfaTest(userNFA.table);
-      }
-      if (proceed) {
-        var regNFA = regularExpression.nfa;
-        var user = subsetConstruct(userNFA.table, startSid, userNFA.accept, 0);
-        var reg = subsetConstruct(regNFA.table, regNFA.start, [regNFA.end], Object.keys(user.dfa).length)
-        var equal = isomorphic(user, reg);
-        if (equal) {
-          update = 1;
-          answer.innerHTML = "Correct";
-          answer.style.color = "green";
-        } else {
-          update = -1;
-          answer.innerHTML = "Incorrect";
-          answer.style.color = "red";
-        }
+    var userNFA = transTable();
+    if (document.getElementById('dfa-toggle').checked) {
+      proceed = dfaTest(userNFA.table);
+    }
+    if (proceed) {
+      var regNFA = regularExpression.nfa;
+      var user = subsetConstruct(userNFA.table, startSid, userNFA.accept, 0);
+      var reg = subsetConstruct(regNFA.table, regNFA.start, [regNFA.end], Object.keys(user.dfa).length)
+      var equal = isomorphic(user, reg);
+      if (equal) {
+        update = 1;
+        answer.innerHTML = "Correct";
+        answer.style.color = "green";
       } else {
         update = -1;
-        answer.innerHTML = "Not a DFA";
+        answer.innerHTML = "Incorrect";
         answer.style.color = "red";
       }
-    }
-    catch{
+    } else {
       update = -1;
-      answer.innerHTML = "Incorrect";
+      answer.innerHTML = "Not a DFA";
       answer.style.color = "red";
     }
   } else {
@@ -1416,14 +1395,13 @@ function comp() {
 
 
 function addNewRegex(userExpr) {
-  regex.innerHTML = userExpr;
-  userExpr = userExpr.replace(/U/g, "+");
+  console.log("naa diri");
+  console.log(c);
   regularExpression.generate2(userExpr);
+  regex.innerHTML = regularExpression.regex;
   answer.innerHTML = "Draw A Machine";
   answer.style.color = "FEF2B";
 }
-
-
 
 
 const canvas = document.getElementById('flat-canvas');
@@ -1463,9 +1441,9 @@ window.addEventListener("keydown",
     if (addLabel != null && event.key.length == 1) {
       // Length of current label
       var length = addLabel.label.length;
-      // Convert 'e' into EPSILON if read, else add character
-      if (event.key == 'e') {
-        addLabel.label += EPSILON;
+      // Convert '\e' into EPSILON if read, else add character
+      if (length > 0 && length < 7 && addLabel.label[length-1] == '\\' && event.key == 'e') {
+        addLabel.label = addLabel.label.slice(0,-1) + EPSILON;
       } else if (length < 6) {
         addLabel.label += event.key;
       }
